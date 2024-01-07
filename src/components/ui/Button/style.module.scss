@@ -1,0 +1,42 @@
+.button {
+  &_primary {
+    @apply text-white py-3 px-8 rounded-md;
+    background-color: rgb(0, 132, 255);
+
+    &:hover {
+      background-color: rgb(0, 116, 224);
+    }
+
+    &:active {
+      background-color: rgb(16, 139, 255);
+    }
+  }
+
+  &_danger {
+    @apply text-white py-2 px-8 rounded-md;
+
+    background-color: rgb(255, 0, 0);
+
+    &:hover {
+      background-color: rgb(224, 0, 0);
+    }
+
+    &:active {
+      background-color: rgb(255, 16, 16);
+    }
+  }
+
+  &_upgrade {
+    @apply text-white py-2 px-8 rounded-md;
+
+    background-color: rgb(65, 228, 0);
+
+    &:hover {
+      background-color: rgb(17, 209, 0);
+    }
+
+    &:active {
+      background-color: rgb(44, 241, 26);
+    }
+  }
+}
