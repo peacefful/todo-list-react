@@ -1,9 +1,8 @@
-import { UIButton } from '../Button/UIButton'
+import { Button } from '../Button/Button'
 import styles from './style.module.scss'
 
-export const Card = (todoProps) => {
-  const { title, id, onSelect, color, icon, isDone } = todoProps
-
+export const Card = (card) => {
+  const { title, id, onSelect, color, icon, isDone } = card
   const theme = color ? `card_${color}` : 'card'
 
   return (
@@ -11,9 +10,9 @@ export const Card = (todoProps) => {
       className={`mt-2 p-6 text-white rounded-xl flex justify-between items-center ${styles[theme]}`}
     >
       <h1>
-        {id + 1}. {title}
+        {id}. {title}
       </h1>
-      <UIButton onClick={onSelect} icon={icon} isDone={isDone}></UIButton>
+      <Button onClick={onSelect} icon={icon} isDone={isDone} />
     </div>
   )
 }

@@ -1,5 +1,5 @@
-import { UIInput } from '../components/ui/Input/UIInput'
-import { UIButton } from '../components/ui/Button/UIButton'
+import { Input } from '../components/ui/Input/Input'
+import { Button } from '../components/ui/Button/Button'
 import { Card } from '../components/ui/Card/Card'
 import { useState } from 'react'
 import done from '../assets/icons/done.svg'
@@ -7,54 +7,58 @@ import close from '../assets/icons/close.svg'
 import { toUpperCase } from '../utils/toUpperCase'
 
 export const Todos = () => {
-  const [todo, setTodo] = useState('')
+  const [value, setvalue] = useState('')
   const [todos, setTodos] = useState([])
-  const [successTodos, setSuccessTodos] = useState([])
 
-  const newTodo = (e) => setTodo(e.target.value)
+  const newTodo = (e) => setvalue(e.target.value)
 
   const addTodos = (e) => {
-    if (e.key === 'Enter') {
-      if (todo.trim()) {
-        setTodos([...todos, toUpperCase(todo)])
-        setTodo('')
+    if (e.key === 'Enter' || e.button === 0) {
+      if (value.trim()) {
+        setTodos([...todos, { title: toUpperCase(value), isSuccess: false }])
+        setvalue('')
       }
     }
   }
 
-  const selectTodo = (index) => {
-    setSuccessTodos([...successTodos, todos[index]])
-    return todos.splice(index, 1)
+  const selectTodo = (selectIndex) => {
+    const updatedTodos = [...todos]
+    updatedTodos[selectIndex].isSuccess = true
+    setTodos(updatedTodos)
   }
 
   return (
     <main className="p-2">
       <div className="flex justify-center gap-2">
-        <UIInput onKeyDown={addTodos} todo={todo} onChange={newTodo} />
-        <UIButton title="Add" color="primary" onClick={addTodos} />
+        <Input onKeyDown={addTodos} value={value} onChange={newTodo} />
+        <Button title="Add" color="primary" onClick={addTodos} />
       </div>
       <div className="mt-10">
-        {successTodos.map((successTodo, index) => (
-          <Card
-            isDone={true}
-            icon={done}
-            color="success"
-            key={index}
-            id={index}
-            title={successTodo}
-          />
-        ))}
+        {todos.map((todo, index) =>
+          todo.isSuccess === true ? (
+            <Card
+              icon={done}
+              color="success"
+              id={index + 1}
+              isDone={true}
+              key={index}
+              title={todo.title}
+            />
+          ) : null
+        )}
       </div>
       <div className="mt-10">
-        {todos.map((todo, index) => (
-          <Card
-            icon={close}
-            onSelect={() => selectTodo(index)}
-            key={index}
-            id={index}
-            title={todo}
-          />
-        ))}
+        {todos.map((todo, index) =>
+          todo.isSuccess === false ? (
+            <Card
+              icon={close}
+              id={index + 1}
+              onSelect={() => selectTodo(index)}
+              key={index}
+              title={todo.title}
+            />
+          ) : null
+        )}
       </div>
     </main>
   )

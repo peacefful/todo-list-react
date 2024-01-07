@@ -1,7 +1,7 @@
 import styles from './style.module.scss'
 
-export const UIButton = (buttonProps) => {
-  const { color, title, icon, onClick, isDone = false } = buttonProps
+export const Button = (button) => {
+  const { color, title, icon, onClick, isDone = false } = button
   const theme = color ? `button_${color}` : null
 
   return (
