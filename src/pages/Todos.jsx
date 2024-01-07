@@ -7,16 +7,16 @@ import close from '../assets/icons/close.svg'
 import { toUpperCase } from '../utils/toUpperCase'
 
 export const Todos = () => {
-  const [value, setvalue] = useState('')
+  const [value, setValue] = useState('')
   const [todos, setTodos] = useState([])
 
-  const newTodo = (e) => setvalue(e.target.value)
+  const newTodo = (e) => setValue(e.target.value)
 
   const addTodos = (e) => {
     if (e.key === 'Enter' || e.button === 0) {
       if (value.trim()) {
         setTodos([...todos, { title: toUpperCase(value), isSuccess: false }])
-        setvalue('')
+        setValue('')
       }
     }
   }
