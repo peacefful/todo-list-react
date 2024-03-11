@@ -1,5 +1,5 @@
-import { Button } from '../Button/Button'
 import styles from './style.module.scss'
+import { Button } from '../Button/Button'
 
 export const Card = (card) => {
   const { title, id, onSelect, color, icon, isDone } = card

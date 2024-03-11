@@ -1,10 +1,10 @@
-import { Input } from '../components/ui/Input/Input'
-import { Button } from '../components/ui/Button/Button'
-import { Card } from '../components/ui/Card/Card'
+import done from '@/assets/icons/done.svg'
+import close from '@/assets/icons/close.svg'
+import { Input } from '@/components/ui/Input/Input'
+import { Button } from '@/components/ui/Button/Button'
+import { Card } from '@/components/ui/Card/Card'
+import { toUpperCase } from '@/utils/toUpperCase'
 import { useState } from 'react'
-import done from '../assets/icons/done.svg'
-import close from '../assets/icons/close.svg'
-import { toUpperCase } from '../utils/toUpperCase'
 
 export const Todos = () => {
   const [value, setValue] = useState('')
@@ -35,7 +35,7 @@ export const Todos = () => {
       </div>
       <div className="mt-10">
         {todos.map((todo, index) =>
-          todo.isSuccess === true ? (
+          todo.isSuccess ? (
             <Card
               icon={done}
               color="success"
@@ -49,7 +49,7 @@ export const Todos = () => {
       </div>
       <div className="mt-10">
         {todos.map((todo, index) =>
-          todo.isSuccess === false ? (
+          !todo.isSuccess ? (
             <Card
               icon={close}
               id={index + 1}
