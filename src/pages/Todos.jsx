@@ -4,26 +4,47 @@ import { Input } from '@/components/ui/Input/Input'
 import { Button } from '@/components/ui/Button/Button'
 import { Card } from '@/components/ui/Card/Card'
 import { toUpperCase } from '@/utils/toUpperCase'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
+const BASE_URL = import.meta.env.VITE_BASE_URL
 
 export const Todos = () => {
   const [value, setValue] = useState('')
   const [todos, setTodos] = useState([])
 
+  useEffect(() => {
+    const fetchTodos = async () => {
+      try {
+        const data = (await axios.get(BASE_URL)).data
+        setTodos(data)
+      } catch (error) {
+        console.error('Error fetching todos:', error)
+      }
+    }
+    fetchTodos()
+  }, [])
+
   const newTodo = (e) => setValue(e.target.value)
 
-  const addTodos = (e) => {
+  const addTodos = async (e) => {
     if (e.key === 'Enter' || e.button === 0) {
       if (value.trim()) {
-        setTodos([...todos, { title: toUpperCase(value), isSuccess: false }])
+        const newTodos = { title: toUpperCase(value), isSuccess: false }
+
+        await axios.post(BASE_URL, newTodos)
+        setTodos([...todos, newTodos])
         setValue('')
       }
     }
   }
 
-  const selectTodo = (selectIndex) => {
+  const selectTodo = async (selectIndex, id) => {
     const updatedTodos = [...todos]
     updatedTodos[selectIndex].isSuccess = true
+
+    await axios.put(`${BASE_URL}/${id}`, updatedTodos[selectIndex])
+
     setTodos(updatedTodos)
   }
 
@@ -53,7 +74,7 @@ export const Todos = () => {
             <Card
               icon={close}
               id={index + 1}
-              onSelect={() => selectTodo(index)}
+              onSelect={() => selectTodo(index, todo.id)}
               key={index}
               title={todo.title}
             />
